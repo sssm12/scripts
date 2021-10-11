@@ -1,0 +1,17 @@
+name: test
+
+on:
+  push:
+    paths: test/**
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v2
+      
+    - name: Make -C test
+      run: make -C test
