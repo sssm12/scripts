@@ -1,0 +1,22 @@
+name: linux
+  
+on: 
+  push:
+    paths:
+      - linux
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Download linux repository
+          run:wget https://github.com/sssm12/linux/archive/$(git rev-parse HEAD:linux).zip
+    - name: Unzip linux
+          run:unzip ${git rev-parse HEAD:linux}.zip
+    - name: Build Linux
+          run:./build-linux.sh linux-$(git rev-parse @:./linux) tinyconfig
