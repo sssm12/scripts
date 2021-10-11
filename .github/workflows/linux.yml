@@ -1,4 +1,5 @@
-name: linux
+# This is a basic workflow to help you get started with Actions
+name: linux.yml
   
 on: 
   push:
@@ -7,16 +8,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Check out
       uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Download linux repository
-          run:wget https://github.com/sssm12/linux/archive/$(git rev-parse HEAD:linux).zip
+        
+    - name: Install Dependencies
+      run: ./install-deps.sh
+        
+    - name: Download linux repository of the current commit number of the submodule.
+      run: wget https://github.com/sssm12/linux/archive/$(git rev-parse HEAD:linux).zip
+        
     - name: Unzip linux
-          run:unzip ${git rev-parse HEAD:linux}.zip
-    - name: Build Linux
-          run:./build-linux.sh linux-$(git rev-parse @:./linux) tinyconfig
+      run: unzip ${git rev-parse HEAD:linux}.zip
+          
+    - name: Build the unzipped source code
+      run: ./build-linux.sh linux-$(git rev-parse @:./linux) tinyconfig
