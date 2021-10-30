@@ -163,3 +163,10 @@ void execute_one(void)
   inject_fault(7);
   syscall(__NR_ioctl, r[0], 0x5423, 0x20000140);
 }
+int main(void)
+{
+  syscall(__NR_mmap, 0x20000000, 0x1000000, 3, 0x32, -1, 0);
+  loop();
+  return 0;
+}
+
