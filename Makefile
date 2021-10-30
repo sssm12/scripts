@@ -1,6 +1,8 @@
-all: test
+sources=$(wildcard */*.c)
+executables=$(patsubst %.c,%.exe,$(sources))
 
-test:
-	$(MAKE) -C $@
+all: $(executables)
 
-.PHONY: test
+%.exe: %.c
+	$(CC) -o $@ $^
+
